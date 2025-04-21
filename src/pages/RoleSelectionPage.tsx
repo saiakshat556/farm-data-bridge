@@ -1,54 +1,31 @@
 
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { User, Activity, Cog } from "lucide-react";
+
+// Refs to your new icons
+const farmerIcon = "/lovable-uploads/8fa10a55-54b0-459d-a4a8-5220c86e6f98.png";
+const employeeIcon = "/lovable-uploads/9068e8a8-dc37-4c77-9c2d-0d28020ad34f.png";
+const adminIcon = "/lovable-uploads/6610e586-3a94-4540-acf0-21fbd86ab3ee.png";
 
 const roles = [
   {
     label: "Farmer",
     role: "farmer",
-    icon: (
-      <img
-        src="/lovable-uploads/8fa10a55-54b0-459d-a4a8-5220c86e6f98.png"
-        alt="Farmer"
-        className="h-16 w-16"
-      />
-    ),
-    cardStyle: "border-yellow-400 hover:shadow-lg",
-    textStyle: "text-cropGreen",
-    border: "border-2",
+    icon: farmerIcon,
   },
   {
     label: "Employee",
     role: "officer",
-    icon: (
-      <img
-        src="/lovable-uploads/9068e8a8-dc37-4c77-9c2d-0d28020ad34f.png"
-        alt="Employee"
-        className="h-16 w-16"
-      />
-    ),
-    cardStyle: "border-yellow-400 hover:shadow-lg",
-    textStyle: "text-cropGreen",
-    border: "border-2",
+    icon: employeeIcon,
   },
   {
     label: "Admin",
     role: "admin",
-    icon: (
-      <img
-        src="/lovable-uploads/6610e586-3a94-4540-acf0-21fbd86ab3ee.png"
-        alt="Admin"
-        className="h-16 w-16"
-      />
-    ),
-    cardStyle: "border-yellow-400 hover:shadow-lg",
-    textStyle: "text-cropGreen",
-    border: "border-2",
+    icon: adminIcon,
   },
 ];
 
-const highlightTabs = [
+const tabs = [
   { label: "Spotlight", active: true },
   { label: "Trending", active: false },
 ];
@@ -57,65 +34,84 @@ const RoleSelectionPage = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-[#f8f8f8] flex flex-col">
+    <div className="min-h-screen bg-[#f6f6f6] flex flex-col relative">
       {/* Header */}
-      <header className="w-full bg-white shadow-sm border-b">
-        <div className="max-w-4xl mx-auto flex items-center justify-center py-5">
-          {/* Logo - can be enhanced with SVG if desired */}
-          <div className="flex items-center gap-3">
-            <span className="text-cropGreen text-3xl font-extrabold">
-              <svg width={50} height={40} viewBox="0 0 64 40">
-                <circle cx={20} cy={29} r={6} fill="#4F7942" />
-                <rect x={10} y={27} width={20} height={6} rx={2} fill="#A67B5B" />
-                <rect x={33} y={32} width={18} height={4} rx={2} fill="#A67B5B" />
-                <rect x={45} y={10} width={12} height={8} rx={2} fill="#4F7942" />
-                <circle cx={52} cy={7} r={3} fill="#4F7942" />
-              </svg>
-            </span>
-            <span className="text-cropGreen font-serif text-3xl font-bold tracking-tight">CROPCONNECT</span>
+      <header className="w-full bg-white shadow-none border-b border-[#dedede]">
+        <div className="max-w-4xl mx-auto flex items-center justify-center py-2 min-h-[75px]">
+          <div className="flex items-center gap-2">
+            {/* Tractor Icon (Replaceable with provided SVG or PNG if required) */}
+            <img
+              src="/lovable-uploads/edd1bce4-00fd-4b0f-9fd5-9288a8781dd1.png"
+              alt="CropConnect logo"
+              className="h-9 w-12 object-contain mt-1"
+              style={{ minWidth: 48 }}
+            />
+            <span className="text-cropGreen font-serif text-3xl font-bold tracking-tight pl-2 select-none">CROPCONNECT</span>
           </div>
         </div>
       </header>
+
       {/* Main Section */}
-      <main className="flex-1 flex flex-col items-center px-2 md:px-0">
+      <main className="flex-1 flex flex-col items-center w-full">
         <h2 className="mt-8 text-2xl md:text-3xl font-bold text-cropGreen mb-6">Choose Your Role</h2>
         {/* Role cards */}
-        <div className="flex flex-col md:flex-row gap-8 mb-10">
+        <div className="flex flex-col md:flex-row gap-8 mb-10 mt-2 items-center justify-center">
           {roles.map((r) => (
-            <div
+            <button
               key={r.label}
-              className={`bg-white rounded-xl shadow-lg p-8 flex flex-col items-center justify-center cursor-pointer transition-all duration-200 min-w-[198px] max-w-xs ${r.cardStyle} ${r.border}`}
-              style={{ borderTopWidth: "4px" }}
+              type="button"
+              className={`bg-white rounded-xl shadow-md flex flex-col items-center justify-center cursor-pointer transition-all duration-200 min-w-[190px] max-w-xs border-2 border-transparent focus:ring-2 focus:ring-cropGreen focus:outline-none relative`}
+              style={{
+                boxShadow: "0px 4px 16px 0px #00000010",
+                borderTop: "4px solid #FFD600",
+                // For visual top-border
+              }}
+              tabIndex={0}
               onClick={() => navigate("/login", { state: { role: r.role } })}
+              onKeyDown={e => {
+                if (e.key === "Enter" || e.key === " ") {
+                  navigate("/login", { state: { role: r.role } });
+                }
+              }}
+              aria-label={`Select role: ${r.label}`}
             >
-              {r.icon}
-              <span className={`mt-6 text-lg font-semibold ${r.textStyle}`}>{r.label}</span>
-            </div>
+              <img
+                src={r.icon}
+                alt={r.label}
+                className="h-16 w-16 select-none mt-3"
+                draggable={false}
+              />
+              <span className="mt-5 text-[1.23rem] font-semibold text-cropGreen mb-3 pb-1 select-none">
+                {r.label}
+              </span>
+            </button>
           ))}
         </div>
 
         {/* Latest updates */}
-        <h3 className="text-xl mb-1 text-cropGreen font-semibold">Latest Updates</h3>
-        <div className="flex w-full md:w-[660px] gap-6 mb-12 justify-center">
-          {highlightTabs.map((tab, i) => (
-            <div
+        <h3 className="text-xl mb-2 text-cropGreen font-semibold">Latest Updates</h3>
+        <div className="flex flex-col md:flex-row w-full max-w-3xl gap-5 mb-12 px-2 justify-center">
+          {tabs.map((tab, idx) => (
+            <button
               key={tab.label}
-              className="flex-1 bg-white mx-2 rounded-lg shadow-sm border border-gray-200 flex flex-col items-center"
+              className={
+                `flex-1 rounded-lg border border-[#e1e1e1] bg-white shadow transition-all duration-150
+                min-h-[56px] flex items-center justify-center text-cropGreen text-lg font-semibold 
+                ${tab.active ? "underline underline-offset-8 decoration-[3px] decoration-yellow-400" : ""}
+                hover:bg-cropGreen/10 focus:ring-2 focus:ring-cropGreen focus:outline-none`
+              }
+              style={{ fontWeight: 600 }}
+              tabIndex={0}
+              type="button"
             >
-              <Button
-                variant="ghost"
-                className={`w-full py-6 my-2 rounded-lg text-cropGreen text-lg font-semibold hover:bg-cropGreen/10 relative ${
-                  tab.active ? "underline underline-offset-8 decoration-[3px] decoration-yellow-400" : ""
-                }`}
-              >
-                {tab.label}
-              </Button>
-            </div>
+              {tab.label}
+            </button>
           ))}
         </div>
       </main>
+
       {/* Footer */}
-      <footer className="w-full bg-cropGreen absolute bottom-0 left-0 text-white text-sm py-2 mt-auto">
+      <footer className="w-full bg-cropGreen absolute left-0 bottom-0 text-white text-sm py-2 z-10">
         <div className="max-w-4xl mx-auto flex flex-col md:flex-row justify-between items-center px-4">
           <span>
             © {new Date().getFullYear()} Crop Connect. All rights reserved.
@@ -130,4 +126,5 @@ const RoleSelectionPage = () => {
     </div>
   );
 };
+
 export default RoleSelectionPage;
