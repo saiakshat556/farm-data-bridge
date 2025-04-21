@@ -19,6 +19,23 @@ export default {
 		},
 		extend: {
 			colors: {
+				// CropConnect custom colors
+				cropGreen: {
+					DEFAULT: '#4F7942',
+					light: '#6B9362',
+					dark: '#3A5A31',
+				},
+				soilBrown: {
+					DEFAULT: '#8B4513',
+					light: '#A67B5B',
+					dark: '#6B3409',
+				},
+				skyBlue: {
+					DEFAULT: '#87CEEB',
+					light: '#ADD8E6',
+					dark: '#4682B4',
+				},
+				wheat: '#F5DEB3',
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
 				ring: 'hsl(var(--ring))',
